@@ -1,9 +1,11 @@
 package com.example.biblioteca.service;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.example.biblioteca.entities.Editorial;
 import com.example.biblioteca.excepcion.DescripcionExecpcion;
 import com.example.biblioteca.excepcion.IsPresentOrNull;
 import com.example.biblioteca.excepcion.NameExecpcion;
+import com.example.biblioteca.excepcion.NoEncontrado;
 import com.example.biblioteca.repository.EditorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import java.util.Optional;
 
 @Service
 
-public class EditorialService {
+public class EditorialService implements BaseService<Editorial>{
 
     @Autowired
     private EditorialRepository editorialRepository;
@@ -29,9 +31,20 @@ public class EditorialService {
         }
     }
 
-    public Editorial registrar(Editorial datosRegistrar) throws Exception{
+    @Override
+    public Editorial findById(Integer id) throws Exception {
+        try{
+            Optional<Editorial> editorial = editorialRepository.findById(id);
+            return editorial.get();
+        }catch (Exception e){
+            throw new NoEncontrado("El editorial no ha sido encontrado");
+        }
+    }
 
-        boolean existeEditorial = editorialRepository.existsByNombre(datosRegistrar.getNombre());
+    @Override
+    public Editorial create(Editorial datosRegistrar) throws Exception {
+
+            boolean existeEditorial = editorialRepository.existsByNombre(datosRegistrar.getNombre());
 
 
             if (datosRegistrar.getNombre().length() > 30 || datosRegistrar.getNombre().length() < 2  ){
@@ -42,13 +55,14 @@ public class EditorialService {
                 throw  new IsPresentOrNull("el nombre ya esta presente o el campo esta vacio");
             }
 
-        Editorial editorial = editorialRepository.save(datosRegistrar);
+            Editorial editorial = editorialRepository.save(datosRegistrar);
             return editorial;
-            
+
+
     }
 
-    public Editorial actualizar(Integer id, Editorial datosNuevos) throws Exception {
-        try {
+    @Override
+    public Editorial update(Integer id, Editorial datosNuevos) throws Exception {
             Optional<Editorial> editorialOptional = editorialRepository.findById(id);
             if(editorialOptional.isPresent()){
                 Editorial editorialExistente = editorialOptional.get();
@@ -57,11 +71,22 @@ public class EditorialService {
                 Editorial editorialActualizado = editorialRepository.save(editorialExistente);
                 return editorialActualizado;
             }else{
-                throw new Exception("Usuario no encontrado");
+                throw new NoEncontrado("Editorial no encontrado");
             }
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
+
+    }
+
+    @Override
+    public boolean daleteById(Integer id) throws Exception {
+
+            Optional<Editorial> editorialOptional = editorialRepository.findById(id);
+            if (editorialOptional.isPresent()){
+                editorialRepository.deleteById(id);
+                return true;
+            }else{
+                throw new NoEncontrado("Editorial no encontrado");
+            }
+
     }
 
 }

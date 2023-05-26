@@ -3,6 +3,7 @@ package com.example.biblioteca.controller;
 import com.example.biblioteca.entities.Editorial;
 import com.example.biblioteca.repository.EditorialRepository;
 import com.example.biblioteca.service.EditorialService;
+import org.aspectj.lang.annotation.DeclareError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +23,25 @@ public class EditorialController {
         return editorialService.findAll();
     }
 
+    @GetMapping("api/editorial/{id}")
+    public Editorial findById(@PathVariable Integer id) throws Exception {
+        return editorialService.findById(id);
+    }
+
     @PostMapping("api/editoriales")
     public Editorial registrar(@RequestBody Editorial datosRegistrar) throws Exception {
 
-        return  editorialService.registrar(datosRegistrar);
+        return  editorialService.create(datosRegistrar);
     }
 
-    @PostMapping("api/editorialer/{id}")
+    @PutMapping("api/editorialer/{id}")
     public Editorial actualizar(@PathVariable Integer id, @RequestBody Editorial datosNuevos) throws Exception{
-        return editorialService.actualizar(id,datosNuevos);
+        return editorialService.update(id,datosNuevos);
+    }
+
+    @DeleteMapping("api/editorial/{id}")
+    public boolean deleteById(@PathVariable Integer id) throws Exception {
+        return editorialService.daleteById(id);
     }
 
 

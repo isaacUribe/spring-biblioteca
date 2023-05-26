@@ -2,6 +2,8 @@ package com.example.biblioteca.controller;
 
 import com.example.biblioteca.entities.Editorial;
 import com.example.biblioteca.repository.EditorialRepository;
+import com.example.biblioteca.service.EditorialService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,38 +12,26 @@ import java.util.Optional;
 
 @RestController
 public class EditorialController {
-    private EditorialRepository editorialRepository;
 
-    public EditorialController(EditorialRepository editorialRepository) {
-        this.editorialRepository = editorialRepository;
-    }
+    @Autowired
+    private EditorialService editorialService;
+
 
     @GetMapping("/api/editoriales")
-    public List<Editorial> findAll(){
-        return editorialRepository.findAll();
-    }
-
-    @GetMapping("/api/editoriales/{id}")
-    public ResponseEntity<Editorial> findById(@PathVariable Integer id){
-        Optional<Editorial> editorial = editorialRepository.findById(id);
-        return ResponseEntity.ok(editorial.get());
+    public List<Editorial> findAll() throws Exception {
+        return editorialService.findAll();
     }
 
     @PostMapping("api/editoriales")
-    public Editorial crear (@RequestBody Editorial editorial){
-        return  editorialRepository.save(editorial);
+    public Editorial registrar(@RequestBody Editorial datosRegistrar) throws Exception {
+
+        return  editorialService.registrar(datosRegistrar);
     }
 
-    @DeleteMapping("api/editoriales")
-    public ResponseEntity<Editorial> deleteAll(){
-        editorialRepository.deleteAll();
-        return ResponseEntity.ok().build();
+    @PostMapping("api/editorialer/{id}")
+    public Editorial actualizar(@PathVariable Integer id, @RequestBody Editorial datosNuevos) throws Exception{
+        return editorialService.actualizar(id,datosNuevos);
     }
 
-    @DeleteMapping("/api/editoriales/{id}")
-    public ResponseEntity<Editorial> deleteById(@PathVariable Integer id){
-        editorialRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
 
 }

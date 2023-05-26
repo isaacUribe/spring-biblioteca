@@ -10,8 +10,7 @@ public class Editorial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "nombre", unique = true, length = 30)
-    @Size(min = 2)
+    @Column(name = "nombre")
     private String nombre;
     @Column(name = "descripcion", length = 300)
     private String descripcion;

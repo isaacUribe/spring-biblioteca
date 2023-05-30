@@ -1,6 +1,9 @@
 package com.example.biblioteca.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.context.annotation.Conditional;
 
 @Entity
 public class Author {
@@ -8,12 +11,14 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(name = "id_pais")
     private Integer idPais;
     @Column(name = "nombre", nullable = false)
     private String nombre;
     @Column (name = "pseudonimo")
     private String pseudonimo;
+    @Email(message = "El email no es valido")
     @Column(name = "email")
     private String email;
 

@@ -27,6 +27,10 @@ public class AuthorController {
     @PostMapping("/create")
     public Author create (@RequestBody Author author) throws Exception {
         return authorService.create(author);
-
+    }
+    @DeleteMapping("/delete/{id}")
+    public boolean delete (@PathVariable Integer id) throws Exception {
+        authorService.daleteById(id);
+        return true;
     }
 }

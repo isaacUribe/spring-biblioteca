@@ -1,9 +1,6 @@
 package com.example.biblioteca;
 
-import com.example.biblioteca.excepcion.DescripcionExecpcion;
-import com.example.biblioteca.excepcion.IsPresentOrNull;
-import com.example.biblioteca.excepcion.NameExecpcion;
-import com.example.biblioteca.excepcion.NoEncontrado;
+import com.example.biblioteca.excepcion.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,5 +27,9 @@ public class DefaultHandlerException  extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<String> noEncontrado(NoEncontrado encontrado){
         return new ResponseEntity<String>(encontrado.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler
+    public ResponseEntity<String> emailIncorrecto(EmailIncorrecto incorrecto){
+        return new ResponseEntity<String>(incorrecto.getMessage(),HttpStatus.BAD_REQUEST);
     }
 }

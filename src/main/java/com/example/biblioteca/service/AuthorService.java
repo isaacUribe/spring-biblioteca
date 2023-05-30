@@ -17,37 +17,29 @@ public class AuthorService implements BaseService<Author> {
     private AuthorRepository authorRepository;
     @Override
     public List<Author> findAll() throws Exception {
-        try {
-            List<Author> authors = authorRepository.findAll();
-            return authors;
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
+            return authorRepository.findAll();
     }
 
     @Override
     public Author findById(Integer id) throws Exception {
-        try {
             Optional<Author> author = authorRepository.findById(id);
             return author.get();
-        }catch (Exception e){
-            throw new NoEncontrado("El author no ha sido encontrado");
-        }
 
     }
 
     @Override
-    public Author create(Author datosRegistrar) throws Exception {
-        return null;
+    public Author create(Author author) throws Exception {
+        return authorRepository.save(author);
     }
 
     @Override
-    public Author update(Integer id, Author datosNuevos) throws Exception {
-        return null;
+    public Author update(Integer id, Author author) throws Exception {
+        return authorRepository.save(author);
     }
 
     @Override
     public boolean daleteById(Integer id) throws Exception {
-        return false;
+        authorRepository.deleteById(id);
+        return true;
     }
 }

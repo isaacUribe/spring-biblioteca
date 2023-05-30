@@ -3,31 +3,24 @@ package com.example.biblioteca.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "authores")
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "id_pais")
+    private Integer idPais;
     @Column(name = "nombre", nullable = false)
     private String nombre;
     @Column (name = "pseudonimo")
     private String pseudonimo;
-    @Column(name = "nacionalidad")
-    private String nacionalidad;
     @Column(name = "email")
     private String email;
 
-    public Author() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "id_pais", insertable = false, updatable = false)
+    private Pais pais;
 
-    public Author(Integer id, String nombre, String pseudonimo, String nacionalidad, String email) {
-        this.id = id;
-        this.nombre = nombre;
-        this.pseudonimo = pseudonimo;
-        this.nacionalidad = nacionalidad;
-        this.email = email;
-    }
 
     public Integer getId() {
         return id;
@@ -53,13 +46,6 @@ public class Author {
         this.pseudonimo = pseudonimo;
     }
 
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
 
     public String getEmail() {
         return email;
@@ -67,5 +53,21 @@ public class Author {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getIdPais() {
+        return idPais;
+    }
+
+    public void setIdPais(Integer idPais) {
+        this.idPais = idPais;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 }

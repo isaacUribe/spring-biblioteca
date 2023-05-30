@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("api/editorial")
 @RestController
 public class EditorialController {
 
@@ -18,28 +19,28 @@ public class EditorialController {
     private EditorialService editorialService;
 
 
-    @GetMapping("/api/editoriales")
+    @GetMapping("/findAll")
     public List<Editorial> findAll() throws Exception {
         return editorialService.findAll();
     }
 
-    @GetMapping("api/editorial/{id}")
+    @GetMapping("/findById/{id}")
     public Editorial findById(@PathVariable Integer id) throws Exception {
         return editorialService.findById(id);
     }
 
-    @PostMapping("api/editoriales")
+    @PostMapping("/create")
     public Editorial registrar(@RequestBody Editorial datosRegistrar) throws Exception {
 
         return  editorialService.create(datosRegistrar);
     }
 
-    @PutMapping("api/editorialer/{id}")
+    @PutMapping("/update/{id}")
     public Editorial actualizar(@PathVariable Integer id, @RequestBody Editorial datosNuevos) throws Exception{
         return editorialService.update(id,datosNuevos);
     }
 
-    @DeleteMapping("api/editorial/{id}")
+    @DeleteMapping("/delete/{id}")
     public boolean deleteById(@PathVariable Integer id) throws Exception {
         return editorialService.daleteById(id);
     }

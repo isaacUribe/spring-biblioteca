@@ -2,6 +2,7 @@ package com.example.biblioteca.controller;
 
 import com.example.biblioteca.entities.Author;
 import com.example.biblioteca.service.AuthorService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,10 @@ public class AuthorController {
     @PostMapping("/create")
     public Author create (@RequestBody Author author) throws Exception {
         return authorService.create(author);
+    }
+    @PutMapping("/update/{id}")
+    public Author update (@PathVariable Integer id, @RequestBody Author author) throws Exception {
+        return authorService.update(id,author);
     }
     @DeleteMapping("/delete/{id}")
     public boolean delete (@PathVariable Integer id) throws Exception {

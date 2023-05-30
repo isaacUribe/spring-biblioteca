@@ -50,7 +50,7 @@ public class AuthorService implements BaseService<Author> {
         }
         if (nombre == null || nombre.isEmpty()){
             if (pseudonimo == null || pseudonimo.isEmpty()){
-                throw new IsPresentOrNull("error");
+                throw new IsPresentOrNull("Tienes que elegir entre nombre o pseudonimo pero no puedes dejar los dos campos vacios");
             }
         }
 
@@ -59,13 +59,31 @@ public class AuthorService implements BaseService<Author> {
 
     @Override
     public Author update(Integer id, Author author) throws Exception {
-        return authorRepository.save(author);
+        Optional<Author> evaluar = authorRepository.findById(id);
+        if (evaluar.isPresent()){
+            Author authorExistente = evaluar.get();
+            authorExistente.setIdPais(author.getIdPais());
+            authorExistente.setNombre(author.getNombre());
+            authorExistente.setPseudonimo(author.getPseudonimo());
+            authorExistente.setEmail(author.getEmail());
+            return authorRepository.save(authorExistente);
+        }else{
+            throw new NoEncontrado("Author no encontrado");
+        }
+
+
     }
 
     @Override
     public boolean daleteById(Integer id) throws Exception {
-        authorRepository.deleteById(id);
-        return true;
+        Optional<Author> author = authorRepository.findById(id);
+        if (author.isPresent()){
+            authorRepository.deleteById(id);
+            return true;
+        }else{
+            throw new NoEncontrado("Author no encontrado");
+        }
+
     }
 
 

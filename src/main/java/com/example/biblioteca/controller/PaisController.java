@@ -13,10 +13,6 @@ public class PaisController {
     @Autowired
     private PaisService paisService;
 
-    @GetMapping("/findAll")
-    public List<Pais> findAll(){
-        return paisService.findAll();
-    }
     @PostMapping("/create")
      public Pais create(@RequestBody Pais pais) throws Exception {
          return paisService.create(pais);

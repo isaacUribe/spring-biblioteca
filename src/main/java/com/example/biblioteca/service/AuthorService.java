@@ -6,6 +6,7 @@ import com.example.biblioteca.excepcion.EmailIncorrecto;
 import com.example.biblioteca.excepcion.IsPresentOrNull;
 import com.example.biblioteca.excepcion.NoEncontrado;
 import com.example.biblioteca.repository.AuthorRepository;
+import com.example.biblioteca.validaciones.Validacion;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,26 +29,17 @@ public class AuthorService implements BaseService<Author> {
     @Override
     public Author findById(Integer id) throws Exception {
             Optional<Author> author = authorRepository.findById(id);
-            if(author.isPresent()){
-                return author.get();
-            }else{
-                throw new NoEncontrado("Author no encontrado");
-            }
 
+            Validacion.validarSiEstaPorElId(author);
+            return author.get();
     }
-
     @Override
     public Author create(Author author) throws Exception {
         String email = author.getEmail();
-        String emailValidator = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         String nombre = author.getNombre();
         String pseudonimo = author.getPseudonimo();
 
-        if(!email.matches(emailValidator)){
-            throw new EmailIncorrecto("El email es incorrecto");
-        } else if (authorRepository.existsByNombre(author.getNombre())) {
-            throw new IsPresentOrNull("El author ya existe");
-        }
+        Validacion.validarEmail(email);
         if (nombre == null || nombre.isEmpty()){
             if (pseudonimo == null || pseudonimo.isEmpty()){
                 throw new IsPresentOrNull("Tienes que elegir entre nombre o pseudonimo pero no puedes dejar los dos campos vacios");
@@ -60,29 +52,22 @@ public class AuthorService implements BaseService<Author> {
     @Override
     public Author update(Integer id, Author author) throws Exception {
         Optional<Author> evaluar = authorRepository.findById(id);
-        if (evaluar.isPresent()){
+        Validacion.validarSiEstaPorElId(evaluar);
+
             Author authorExistente = evaluar.get();
             authorExistente.setIdPais(author.getIdPais());
             authorExistente.setNombre(author.getNombre());
             authorExistente.setPseudonimo(author.getPseudonimo());
             authorExistente.setEmail(author.getEmail());
             return authorRepository.save(authorExistente);
-        }else{
-            throw new NoEncontrado("Author no encontrado");
-        }
-
-
     }
 
     @Override
     public boolean daleteById(Integer id) throws Exception {
         Optional<Author> author = authorRepository.findById(id);
-        if (author.isPresent()){
+        Validacion.validarSiEstaPorElId(author);
             authorRepository.deleteById(id);
             return true;
-        }else{
-            throw new NoEncontrado("Author no encontrado");
-        }
 
     }
 

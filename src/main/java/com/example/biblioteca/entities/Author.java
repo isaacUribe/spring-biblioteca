@@ -18,7 +18,7 @@ public class Author {
     private String nombre;
     @Column (name = "pseudonimo")
     private String pseudonimo;
-    @Email(message = "El email no es valido")
+
     @Column(name = "email")
     private String email;
 

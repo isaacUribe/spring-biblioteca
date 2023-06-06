@@ -2,10 +2,6 @@ package com.example.biblioteca.service;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
 import com.example.biblioteca.entities.Editorial;
-import com.example.biblioteca.excepcion.DescripcionExecpcion;
-import com.example.biblioteca.excepcion.IsPresentOrNull;
-import com.example.biblioteca.excepcion.NameExecpcion;
-import com.example.biblioteca.excepcion.NoEncontrado;
 import com.example.biblioteca.repository.EditorialRepository;
 import com.example.biblioteca.validaciones.Validacion;
 import org.springframework.beans.factory.annotation.Autowired;

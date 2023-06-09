@@ -14,9 +14,10 @@ public class PaisService {
     @Autowired
     private PaisRepository paisRepository;
 
-    public List<Pais> findAll(){
-        return paisRepository.findAll();
-    }
+//    public List<Pais> findAll(){
+//        return paisRepository.findAll();
+//    }
+
 
     public Pais create (Pais pais) throws Exception{
         String nombre = pais.getNombre();

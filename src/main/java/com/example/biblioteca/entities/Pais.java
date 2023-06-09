@@ -16,6 +16,13 @@ public class Pais {
     @OneToMany(mappedBy = "pais")
     private List<Author> author;
 
+    public Pais() {
+    }
+
+    public Pais(Integer idPais, String nombre) {
+        this.idPais = idPais;
+        this.nombre = nombre;
+    }
 
     public Integer getId() {
         return idPais;

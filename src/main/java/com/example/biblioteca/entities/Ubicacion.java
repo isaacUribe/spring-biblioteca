@@ -14,6 +14,16 @@ public class Ubicacion {
     private String salon;
     private String estante;
 
+    public Ubicacion() {
+    }
+
+    public Ubicacion(Integer idUbicacion, String piso, String salon, String estante) {
+        this.idUbicacion = idUbicacion;
+        this.piso = piso;
+        this.salon = salon;
+        this.estante = estante;
+    }
+
     public Integer getIdUbicacion() {
         return idUbicacion;
     }

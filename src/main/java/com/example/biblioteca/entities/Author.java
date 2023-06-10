@@ -26,6 +26,17 @@ public class Author {
     @JoinColumn(name = "id_pais", insertable = false, updatable = false)
     private Pais pais;
 
+    public Author() {
+    }
+
+    public Author(Integer id, Integer idPais, String nombre, String pseudonimo, String email, Pais pais) {
+        this.id = id;
+        this.idPais = idPais;
+        this.nombre = nombre;
+        this.pseudonimo = pseudonimo;
+        this.email = email;
+        this.pais = pais;
+    }
 
     public Integer getId() {
         return id;
